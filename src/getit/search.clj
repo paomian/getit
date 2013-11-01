@@ -9,6 +9,7 @@
     [clojure.data.json           :as json]
     [clj-http.client             :as client]))
 (declare result)
+(declare api-date)
 (defn parse-int [str] (try (java.lang.Long/valueOf str) (catch NumberFormatException _ 0)))
 (template search-page []
           [:div.container
