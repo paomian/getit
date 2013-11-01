@@ -12,7 +12,7 @@
                            ;;[org.clojure/data.json "0.2.3"]
                            ;;[com.taoensso/carmine "2.3.1"]
                            ;;[ring-mock "0.1.5"]
-                           [clj-http "0.6.1"]
+                           [clj-http "0.7.7"]
                            [org.clojure/data.json "0.2.3"]
                            [hickory "0.5.1"]]
             :plugins [[lein-ring "0.8.5"]]

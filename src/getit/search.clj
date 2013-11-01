@@ -53,9 +53,11 @@
               [:tr
                [:td
                 [:a {:href (str "/search/" (:username res))} (str (:realname res))]]
+               [:td
+                [:a {:href (str "/test/" (:username res))} (str (:username res))]]
+
                (for [[label-name]
                      [
-                      [:username]
                       [:password]
                       [:email]]]
                    [:td (str (label-name res))])])]])
@@ -79,13 +81,13 @@
                  [:td (str name)]
                  [:td (str (label-name result))]])]])
 (template show-api-id [id]
-[:div.container
- [:table.table
-  (for [[name label-name]
-        (api-date id)]
-    [:tr
-     [:td (str name)]
-     [:td (str (label-name result))]])]])
+          [:div.container
+           [:table.table
+            (for [[name label-name]
+                  (api-date id)]
+              [:tr
+               [:td (str name)]
+               [:td (str label-name)]])]])
 
 (defn search-id 
   [id]
@@ -111,10 +113,11 @@
         admin (session/get :uname)]
     (if admin
       (do
+        (println result)
         (show-id result))
       (response/redirect "/"))))
 (defn api-date 
   [id]
   (json/read-str
     (:body
-      (client/post "http://gotit.asia/api/gpa" {:form-params {:xh id}}))))
+      (client/post "http://gotit.asia/api/gpa" {:form-params {:xh id}})) :key-fn keyword))
