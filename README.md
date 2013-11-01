@@ -8,10 +8,19 @@ You will need [Leiningen][1] 1.7.0 or above installed.
 
 [1]: https://github.com/technomancy/leiningen
 
+## 依赖
+
+	mongodb
+	这你需要有个mongodb来当作这个应用的数据库
+	其他的依赖包，将会用`lein deps`来全部解决
+	
+	
+
 ## Running
 
 To start a web server for the application, run:
 
+	lein deps
     lein run
 
 ## Action
