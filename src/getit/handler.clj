@@ -15,7 +15,7 @@
            (POST "/admin" [uname upwd] (check-login uname upwd))
            (GET "/search" [] (search))
            (GET "/search/:id" [id] (show id))
-           (GET "/test/:id" [id] (show-api-id id))
+           (GET "/test/:id" [id] (search-api id))
            (GET "/id" [id] (search-id id))
            (GET "/name" [rlname] (search-nm rlname))
            (route/resources "/")

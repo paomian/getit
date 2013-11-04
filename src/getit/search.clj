@@ -1,6 +1,7 @@
 (ns getit.search
   (:use [monger.operators]
         [hiccup.form]
+        [hiccup.element]
         [monger.collection       :only [find-one-as-map find-maps update]]
         [getit.template          :only [template]])
   (:require 
@@ -42,8 +43,8 @@
           [:div.container
            [:table.table
             ;;(for [[name label-name]
-            ;;     [["姓名 :" :realname]
-            ;;    ["学号 :" :username]
+            ;;  [["姓名 :" :realname]
+            ;;  ["学号 :" :username]
             ;;  ["密码 :" :password]
             ;;["邮箱 :" :email]]]
             [:tr
@@ -61,8 +62,19 @@
                       [:password]
                       [:email]]]
                    [:td (str (label-name res))])])]])
+(defn show-image
+  [result]
+  (let [id (str (:username result))]
+    (cond
+      (= \1 (get id 0)) (cond
+                           (= \0 (get id 1)) "/photo/2010/"
+                           (= \1 (get id 1)) "/photo/2011/"
+                           (= \2 (get id 1)) "/photo/2012/")
+      (= \9 (get id 0)) "/photo/2009/0")))
 (template show-id [result]
             [:div.container
+             [:div.row
+              [:div.span6
              [:table.table
               (for [[name label-name]
                     [
@@ -79,7 +91,9 @@
                      ["login_application :" :login_application]]]
                 [:tr
                  [:td (str name)]
-                 [:td (str (label-name result))]])]])
+                 [:td (str (label-name result))]])]]
+              [:div.span6
+               [:img {:src (str (show-image result) (:username result) ".jpg")}]]]])
 (template show-api-id [id]
           [:div.container
            [:table.table
@@ -88,7 +102,13 @@
               [:tr
                [:td (str name)]
                [:td (str label-name)]])]])
-
+(defn search-api
+  [id]
+  (let [admin (session/get :uname)]
+    (if admin
+      (do
+        (show-api-id id))
+      (response/redirect "/"))))
 (defn search-id 
   [id]
   (println (type id))
