@@ -8,8 +8,8 @@
     (html5
      [:head
       [:title "Hello World"]
-      (include-css "http://libs.baidu.com/bootstrap/2.3.2/css/bootstrap.min.css")
-      (include-css "http://libs.baidu.com/bootstrap/2.3.2/css/bootstrap-responsive.min.css")
+      (include-css "/bootstrap/css/bootstrap.min.css")
+      (include-css "/bootstrap/css/bootstrap-responsive.min.css")
       ]
      [:body
       [:div.navbar.navbar-inverse 
@@ -36,8 +36,8 @@
               [:li [:a {:href "/login"} "登陆"]]])
            ]]]]]
       code
-      (include-js "http://libs.baidu.com/jquery/2.0.2/jquery.min.js")
-      (include-js "http://libs.baidu.com/bootstrap/2.3.2/js/bootstrap.min.js")
+      (include-js "/bootstrap/js/jquery-2.0.3.min.js")
+      (include-js "/bootstrap/js/bootstrap.min.js")
       ])))
 (defmacro template [page-name [& args] & code]
   `(defn ~page-name [~@args]

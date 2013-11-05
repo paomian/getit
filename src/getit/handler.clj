@@ -12,7 +12,7 @@
 (defroutes getit-routes
            (GET "/" [] (login))
            (GET "/logout" [] (logout))
-           (POST "/admin" [uname upwd] (check-login uname upwd))
+           (POST "/admin" [uname upwd rupwd] (check-login uname upwd rupwd))
            (GET "/search" [] (search))
            (GET "/search/:id" [id] (show id))
            (GET "/test/:id" [id] (search-api id))

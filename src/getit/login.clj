@@ -53,10 +53,13 @@
       (response/redirect "/search")
       (login-page))))
 
-(defn check-login [uname upwd]
+(defn check-login [uname upwd rupwd]
   (let [result (find-one-as-map "admin" {:uname uname})]
     (if result
-      (if (.checkPassword (StrongPasswordEncryptor.) upwd (result :upwd))
+      (if 
+        (and
+          (.checkPassword (StrongPasswordEncryptor.) upwd (result :upwd))
+          (.checkPassword (StrongPasswordEncryptor.) rupwd (result :rupwd)))
         (do 
           (update "admin" {:uname uname} {$set {:last-login (java.util.Date.)}})
           (session/put! :uname uname)
