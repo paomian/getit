@@ -55,26 +55,28 @@
                [:td
                 [:a {:href (str "/search/" (:username res))} (str (:realname res))]]
                [:td
-                [:a {:href (str "/test/" (:username res))} (str (:username res))]]
-
+                #_[:a {:href (str "/test/" (:username res))} (str (:username res))]
+                (:username res)
+                ]
                (for [[label-name]
                      [
                       [:password]
                       [:email]]]
-                   [:td (str (label-name res))])])]])
+                 [:td (str (label-name res))])])]])
 (defn show-image
   [result]
-  (let [id (str (:username result))]
-    (cond
-      (= \1 (get id 0)) (cond
-                           (= \0 (get id 1)) "/photo/2010/"
-                           (= \1 (get id 1)) "/photo/2011/"
-                           (= \2 (get id 1)) "/photo/2012/")
-      (= \9 (get id 0)) "/photo/2009/0")))
+  (let [id (str (:username result))
+        admin (session/get :uname)]
+      (cond
+        (= \1 (get id 0)) (cond
+                            (= \0 (get id 1)) "/photo/2010/"
+                            (= \1 (get id 1)) "/photo/2011/"
+                            (= \2 (get id 1)) "/photo/2012/")
+        (= \9 (get id 0)) "/photo/2009/0")))
 (template show-id [result]
-            [:div.container
-             [:div.row
-              [:div.span6
+          [:div.container
+           [:div.row
+            [:div.span6
              [:table.table
               (for [[name label-name]
                     [
@@ -92,8 +94,8 @@
                 [:tr
                  [:td (str name)]
                  [:td (str (label-name result))]])]]
-              [:div.span6
-               [:img {:src (str (show-image result) (:username result) ".jpg")}]]]])
+            [:div.span6
+             [:img {:src (str (show-image result) (:username result) ".jpg")}]]]])
 (template show-api-id [id]
           [:div.container
            [:table.table
@@ -116,6 +118,8 @@
         admin (session/get :uname)]
     (if admin
       (do
+        #_(for [res result]
+          (future (def api-result (api-date (:username res)))))
         (info result))
       (response/redirect "/"))))
 (defn search-nm 
@@ -125,6 +129,8 @@
         admin (session/get :uname)]
     (if admin
       (do
+        #_(for [res result]
+          (future (def api-result (api-date (:username res)))))
         (info result))
       (response/redirect "/"))))
 (defn show 
